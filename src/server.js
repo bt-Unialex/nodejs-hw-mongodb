@@ -13,7 +13,7 @@ export const setupServer = () => {
   httpServer.use(pinoLogger({ transport: { target: 'pino-pretty' } }));
 
   httpServer.get('/', (request, response) => {
-    response.send('Welcome to "/"');
+    response.send('Welcome to "Contacts book". Please pass to /contacts');
   });
 
   httpServer.get('/contacts', (request, response) => {
@@ -29,15 +29,20 @@ export const setupServer = () => {
   httpServer.get('/contacts/:contactId', (request, response) => {
     const { contactId } = request.params;
     getContactById(contactId)
-      .then((result) =>
+      .then((result) => {
+        if (result === null) throw new Error('404');
         response.status(200).json({
           status: 200,
-          message: `Successfully found contact"Successfully found contact with id ${contactId}!`,
+          message: `Successfully found contact with id ${contactId}!`,
           data: result,
-        }),
-      )
-      .catch(() => {
-        response.status(404).json({ message: 'Contact not found' });
+        });
+      })
+      .catch((error) => {
+        if (error.message === '404') {
+          response.status(404).json({ message: 'Contact not found' });
+        } else {
+          response.status(404).json({ message: 'Wrong ID' });
+        }
       });
   });
 
