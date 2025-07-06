@@ -9,13 +9,14 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 export const setupServer = () => {
   const httpServer = express();
   const PORT = getEnvVar('port', 3000);
+  httpServer.set('json spaces', 2); //json prettier
 
   httpServer.use(corse());
 
   httpServer.use(pinoLogger({ transport: { target: 'pino-pretty' } }));
 
-  // httpServer.use(express.json()); // для JSON-тел
-  httpServer.use(express.urlencoded({ extended: true }));
+  // httpServer.use(express.json()); // for JSON-body
+  httpServer.use(express.urlencoded({ extended: true })); // for formData-body
 
   httpServer.use(router);
 
