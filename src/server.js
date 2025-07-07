@@ -15,7 +15,7 @@ export const setupServer = () => {
 
   httpServer.use(pinoLogger({ transport: { target: 'pino-pretty' } }));
 
-  // httpServer.use(express.json()); // for JSON-body
+  httpServer.use(express.json()); // for JSON-body
   httpServer.use(express.urlencoded({ extended: true })); // for formData-body
 
   httpServer.use(router);
