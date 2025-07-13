@@ -7,9 +7,18 @@ import {
   updateContactById,
 } from '../services/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const getAllContactsController = ctrlWrapper(async (request, response) => {
-  const result = await getAllContacts();
+  const paginationParams = parsePaginationParams(request.query);
+  const sortParams = parseSortParams(request.query);
+  const filter = parseFilterParams(request.query);
+
+  const result = await getAllContacts({ ...paginationParams, ...sortParams, ...filter });
+  if (result.data.length === 0) throw createHttpError(404, 'No matches found');
+
   response.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
