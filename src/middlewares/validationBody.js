@@ -1,7 +1,8 @@
 import createHttpError from 'http-errors';
 import { bodyValidationSchema } from '../validation/contacts.js';
+import { userValidationSchema } from '../validation/auth.js';
 
-const validationBody = (schema) => async (request, response, next) => {
+export const validationBody = (schema) => async (request, response, next) => {
   try {
     await schema.validateAsync(request.body, { abortEarly: false });
     next();
@@ -11,7 +12,10 @@ const validationBody = (schema) => async (request, response, next) => {
   }
 };
 
-export const updateValidationBody = validationBody(bodyValidationSchema);
-export const createValidationBody = validationBody(
+export const registerUserBodyCheck = validationBody(userValidationSchema);
+export const loginUserBodyCheck = validationBody(userValidationSchema.fork(['name'], (field) => field.optional()));
+
+export const updateContactBodyCheck = validationBody(bodyValidationSchema);
+export const createContactBodyCheck = validationBody(
   bodyValidationSchema.fork(['name', 'phoneNumber'], (field) => field.required())
 );
