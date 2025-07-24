@@ -6,16 +6,16 @@ import {
   getContactByIdController,
   updateContactByIdController,
 } from '../controllers/contacts.js';
-import { createValidationBody, updateValidationBody } from '../middlewares/validationBody.js';
+import { createContactBodyCheck, updateContactBodyCheck } from '../middlewares/validationBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
 
-const endpoints = Router();
+const contactsEndpoints = Router();
 
-endpoints.get('/', getAllContactsController);
-endpoints.get('/:contactId', isValidId, getContactByIdController);
+contactsEndpoints.get('/', getAllContactsController);
+contactsEndpoints.get('/:contactId', isValidId, getContactByIdController);
 
-endpoints.post('/', createValidationBody, createContactController);
-endpoints.patch('/:contactId', isValidId, updateValidationBody, updateContactByIdController);
-endpoints.delete('/:contactId', isValidId, deleteContactByIdController);
+contactsEndpoints.post('/', createContactBodyCheck, createContactController);
+contactsEndpoints.patch('/:contactId', isValidId, updateContactBodyCheck, updateContactByIdController);
+contactsEndpoints.delete('/:contactId', isValidId, deleteContactByIdController);
 
-export default endpoints;
+export default contactsEndpoints;
