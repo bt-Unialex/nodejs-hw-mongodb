@@ -13,7 +13,7 @@
     "phoneNumber": "+380000000002",
     "email": null,
     "isFavourite": false,
-    "contactType": "personal",
+    "contactType": "work",
     "createdAt": "2024-05-08T16:12:14.954163",
     "updatedAt": "2024-05-08T16:12:14.954164"
   },
@@ -66,7 +66,7 @@
     "name": "Maria Petrenko",
     "phoneNumber": "+380000000008",
     "email": null,
-    "isFavourite": false,
+    "isFavourite": true,
     "contactType": "personal",
     "createdAt": "2024-05-08T16:12:14.954196",
     "updatedAt": "2024-05-08T16:12:14.954198"
@@ -75,7 +75,7 @@
     "name": "Ivan Ivanenko",
     "phoneNumber": "+380000000009",
     "email": "vasyl9@example.com",
-    "isFavourite": false,
+    "isFavourite": true,
     "contactType": "home",
     "createdAt": "2024-05-08T16:12:14.954203",
     "updatedAt": "2024-05-08T16:12:14.954205"
@@ -84,8 +84,8 @@
     "name": "Kateryna Kovalchuk",
     "phoneNumber": "+3800000000010",
     "email": null,
-    "isFavourite": false,
-    "contactType": "personal",
+    "isFavourite": true,
+    "contactType": "work",
     "createdAt": "2024-05-08T16:12:14.954208",
     "updatedAt": "2024-05-08T16:12:14.954211"
   }

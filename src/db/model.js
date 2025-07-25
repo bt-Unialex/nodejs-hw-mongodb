@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const contactsSchema = new Schema(
   {
+    ownerId: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     email: { type: String, default: null },

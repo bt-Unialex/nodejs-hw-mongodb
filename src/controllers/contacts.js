@@ -12,11 +12,12 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const getAllContactsController = ctrlWrapper(async (request, response) => {
+  const ownerId = request.user._id;
   const paginationParams = parsePaginationParams(request.query);
   const sortParams = parseSortParams(request.query);
   const filter = parseFilterParams(request.query);
 
-  const result = await getAllContacts({ ...paginationParams, ...sortParams, ...filter });
+  const result = await getAllContacts({ ...paginationParams, ...sortParams, ...filter }, ownerId);
   if (result.data.length === 0) throw createHttpError(404, 'No matches found');
 
   response.status(200).json({
@@ -28,7 +29,8 @@ export const getAllContactsController = ctrlWrapper(async (request, response) =>
 
 export const getContactByIdController = ctrlWrapper(async (request, response) => {
   const { contactId } = request.params;
-  const result = await getContactById(contactId);
+  const ownerId = request.user._id;
+  const result = await getContactById(contactId, ownerId);
 
   if (result === null) throw createHttpError(404, 'Contact not found');
 
@@ -40,7 +42,8 @@ export const getContactByIdController = ctrlWrapper(async (request, response) =>
 });
 
 export const createContactController = ctrlWrapper(async (request, response) => {
-  const newContact = await createContact(request.body);
+  const ownerId = request.user._id;
+  const newContact = await createContact(request.body, ownerId);
 
   response.status(201).json({
     status: 201,
@@ -51,7 +54,8 @@ export const createContactController = ctrlWrapper(async (request, response) => 
 
 export const updateContactByIdController = ctrlWrapper(async (request, response) => {
   const { contactId } = request.params;
-  const result = await updateContactById(contactId, request.body);
+  const ownerId = request.user._id;
+  const result = await updateContactById(contactId, request.body, ownerId);
 
   if (result === null) throw createHttpError(404, 'Contact not found');
 
@@ -64,7 +68,8 @@ export const updateContactByIdController = ctrlWrapper(async (request, response)
 
 export const deleteContactByIdController = ctrlWrapper(async (request, response) => {
   const { contactId } = request.params;
-  const result = await deleteContactById(contactId);
+  const ownerId = request.user._id;
+  const result = await deleteContactById(contactId, ownerId);
 
   if (result === null) throw createHttpError(404, 'Contact not found');
 
