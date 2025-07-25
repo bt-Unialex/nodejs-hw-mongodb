@@ -8,8 +8,11 @@ import {
 } from '../controllers/contacts.js';
 import { createContactBodyCheck, updateContactBodyCheck } from '../middlewares/validationBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const contactsEndpoints = Router();
+
+contactsEndpoints.use(authenticate);
 
 contactsEndpoints.get('/', getAllContactsController);
 contactsEndpoints.get('/:contactId', isValidId, getContactByIdController);

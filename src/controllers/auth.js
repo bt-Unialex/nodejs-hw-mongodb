@@ -23,7 +23,7 @@ export const loginUserController = ctrlWrapper(async (request, response) => {
 
 export const refreshUserController = ctrlWrapper(async (request, response) => {
   const { sessionId, refreshToken } = request.cookies;
-  const session = await refreshUserSession({ sessionId, refreshToken });
+  const session = await refreshUserSession(sessionId, refreshToken);
 
   setupSession(response, session);
 
