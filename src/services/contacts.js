@@ -1,12 +1,11 @@
-import { contactsCollection } from '../db/model.js';
+import { contactsCollection } from '../db/contactsModel.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async ({ page, perPage, sortBy, sortOrder, isFavourite, type }, ownerId) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const ownerContacts = contactsCollection.where('ownerId').equals(ownerId);
-  // const ownerContacts = contactsCollection.find();
+  const ownerContacts = contactsCollection.where('userId').equals(ownerId);
 
   if (isFavourite !== null) {
     ownerContacts.where('isFavourite').equals(isFavourite);
@@ -32,8 +31,9 @@ export const getAllContacts = async ({ page, perPage, sortBy, sortOrder, isFavou
 };
 
 export const getContactById = async (id, ownerId) => {
-  const ownerContacts = contactsCollection.where('ownerId').equals(ownerId);
-  const contact = await ownerContacts.findById(id);
+  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
+  // const contact = await ownerContacts.findById(id);
+  const contact = await contactsCollection.findOne({ _id: id, userId: ownerId });
   return contact;
 };
 
@@ -43,17 +43,17 @@ export const createContact = async (payload, ownerId) => {
 };
 
 export const updateContactById = async (id, payload, ownerId) => {
-  const ownerContacts = contactsCollection.where('ownerId').equals(ownerId);
+  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
   const options = {
     new: true,
     // includeResultMetadata: true,
   };
-  const updatedContact = await ownerContacts.findOneAndUpdate({ _id: id }, payload, options);
+  const updatedContact = await contactsCollection.findOneAndUpdate({ _id: id, userId: ownerId }, payload, options);
   return updatedContact;
 };
 
 export const deleteContactById = async (id, ownerId) => {
-  const ownerContacts = contactsCollection.where('ownerId').equals(ownerId);
-  const updatedContact = await ownerContacts.findOneAndDelete({ _id: id });
+  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
+  const updatedContact = await contactsCollection.findOneAndDelete({ _id: id, userId: ownerId });
   return updatedContact;
 };
