@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import { bodyValidationSchema } from '../validation/contacts.js';
-import { userValidationSchema } from '../validation/auth.js';
+import { requestResetPwdEmailSchema, resetAuthPasswordSchema, userValidationSchema } from '../validation/auth.js';
 
 export const validationBody = (schema) => async (request, response, next) => {
   try {
@@ -14,6 +14,9 @@ export const validationBody = (schema) => async (request, response, next) => {
 
 export const registerUserBodyCheck = validationBody(userValidationSchema);
 export const loginUserBodyCheck = validationBody(userValidationSchema.fork(['name'], (field) => field.optional()));
+
+export const requestResetPwdBodyCheck = validationBody(requestResetPwdEmailSchema);
+export const resetAuthPasswordBodyCheck = validationBody(resetAuthPasswordSchema);
 
 export const updateContactBodyCheck = validationBody(bodyValidationSchema);
 export const createContactBodyCheck = validationBody(
