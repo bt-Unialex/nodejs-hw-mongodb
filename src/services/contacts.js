@@ -31,19 +31,16 @@ export const getAllContacts = async ({ page, perPage, sortBy, sortOrder, isFavou
 };
 
 export const getContactById = async (id, ownerId) => {
-  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
-  // const contact = await ownerContacts.findById(id);
   const contact = await contactsCollection.findOne({ _id: id, userId: ownerId });
   return contact;
 };
 
 export const createContact = async (payload, ownerId) => {
-  const newContact = await contactsCollection.create({ ownerId, ...payload });
+  const newContact = await contactsCollection.create({ userId: ownerId, ...payload });
   return newContact;
 };
 
 export const updateContactById = async (id, payload, ownerId) => {
-  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
   const options = {
     new: true,
     // includeResultMetadata: true,
@@ -53,7 +50,6 @@ export const updateContactById = async (id, payload, ownerId) => {
 };
 
 export const deleteContactById = async (id, ownerId) => {
-  // const ownerContacts = contactsCollection.where('userId').equals(ownerId);
   const updatedContact = await contactsCollection.findOneAndDelete({ _id: id, userId: ownerId });
   return updatedContact;
 };
