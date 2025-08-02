@@ -1,11 +1,17 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 
-export const createDirIfNotExists = async (path) => {
+export const createDirIfNotExists = (path) => {
   try {
-    await fs.access(path);
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      await fs.mkdir(path);
+    fs.accessSync(path);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      try {
+        fs.mkdirSync(path, { recursive: true });
+      } catch (mkdirErr) {
+        console.error("Can't make directory:", mkdirErr);
+      }
+    } else {
+      console.error('File system error', error);
     }
   }
   return path;
