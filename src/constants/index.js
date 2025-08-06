@@ -23,3 +23,4 @@ const APP_DIR = path.join(process.cwd(), 'src');
 export const TEMPLATE_DIR = path.join(APP_DIR, 'templates');
 export const TEMP_UPLOAD_DIR = createDirIfNotExists(path.join(APP_DIR, 'temp'));
 // export const PHOTO_DIR = path.join(APP_DIR, 'uploads');
+export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');

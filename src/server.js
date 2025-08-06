@@ -20,7 +20,6 @@ export const setupServer = () => {
   httpServer.use(express.json()); // for JSON-body
   // httpServer.use(express.urlencoded({ extended: true })); // for x-www-form-urlencoded-body
 
-  // httpServer.use('/uploads', express.static(PHOTO_DIR)); //for static(local) assets
   httpServer.use(router);
 
   httpServer.use(notFoundHandler);

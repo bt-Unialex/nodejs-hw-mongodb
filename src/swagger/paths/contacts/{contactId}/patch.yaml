@@ -1,0 +1,69 @@
+tags:
+  - Contacts
+summary: Update contact by id
+operationId: updateContactbById
+description: 'Update contact by id'
+security:
+  - bearerAuth: []
+parameters:
+  - name: contactId
+    in: path
+    required: true
+    schema:
+      type: string
+      example: '68839a81420dc1826aea2c3f'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Dou'
+          phoneNumber:
+            description: "Contact's phone number must contain only digits, spaces, parentheses, plus signs, and hyphens"
+            type: string
+            example: '+380000000000'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'example@mail.com'
+          isFavourite:
+            description: 'Is it favourite contact'
+            type: boolean
+            example: false
+          contactType:
+            description: 'Type of contact'
+            type: string
+            enum: ['work', 'home', 'personal']
+          photo:
+            description: "Contact's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Update contact by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          # required:
+          #   - status
+          #   - message
+          #   - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/contacts_404.yaml'
