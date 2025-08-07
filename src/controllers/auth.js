@@ -59,8 +59,8 @@ export const sendResetEmailController = ctrlWrapper(async (request, response) =>
   await requestResetToken(request.body.email);
 
   response.json({
-    message: 'Reset password email was successfully sent!',
     status: 200,
+    message: 'Reset password email was successfully sent!',
     data: {},
   });
 });
@@ -69,8 +69,8 @@ export const resetAuthPasswordController = ctrlWrapper(async (request, response)
   await resetAuthPassword(request.body);
 
   response.json({
-    message: 'Password has been successfully reset.',
     status: 200,
+    message: 'Password has been successfully reset.',
     data: {},
   });
 });

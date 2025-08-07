@@ -5,9 +5,12 @@ import fs from 'node:fs';
 import { SWAGGER_PATH } from '../constants/index.js';
 
 export const swaggerDocs = () => {
+  const options = {
+    customCss: '.parameters-container>.opblock-description-wrapper { display: none }',
+  };
   try {
     const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString());
-    return [...swaggerUI.serve, swaggerUI.setup(swaggerDoc)];
+    return [...swaggerUI.serve, swaggerUI.setup(swaggerDoc, options)];
   } catch (error) {
     console.error(error);
     return (request, response, next) => next(createHttpError(500, "Can't load swagger docs"));

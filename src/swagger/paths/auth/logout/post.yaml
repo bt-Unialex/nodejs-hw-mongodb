@@ -1,0 +1,19 @@
+tags:
+  - Auth
+summary: Logout
+operationId: logoutUser
+description: 'User Logout'
+security: []
+parameters:
+  - name: 'sessionId'
+    in: cookie
+    description: 'Session ID'
+    required: true
+    schema:
+      type: string
+      example: '68839a81420dc1826aea2c3f'
+responses:
+  '204':
+    description: 'User successfully loged out'
+  '401':
+    description: 'No unauthorized errors here'
